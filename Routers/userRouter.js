@@ -3,27 +3,30 @@ import User from "../Models/User.js";
 import bcrypt from "bcryptjs";
 import generateLogToken from "../utils.js";
 
+
+
 const router = express.Router();
-const saltRound = bcrypt.genSalt(10); 
+
+
 //Create User
-router.post("/register", async(req, res) => {
-    console.log("req.body:", req.body);
+  router.post("/re", async (req, res) => {
+    console.log(req.body);
     try {
-      let user = await User.findOne({ email: req.body.email });
-      if (user) {
-        return res.send("User with given email is existing!");
-      }
-  
-      user = new User({
-        fullname: req.body.fullname,
-        email: req.body.email,
-        password: await bcrypt.hash(req.body.password, saltRound),
-      }).save();
-      
-      res.send(user);
-    } catch (error) {
-      console.error(error);
-      res.status(500).send("An error occurred during registration.");
+      console.log(req.body);
+      let user = await User.findOne({email : req.body.email});
+      if (user)
+      return res.send("User with given email is existing!");
+    
+   user= new User({
+      fullname: req.body.fullname,
+      email: req.body.email,
+      password: await bcrypt.hash(req.body.password, 10),
+    }).save();
+    res.send(user);
+    }
+    
+    catch(error) {
+
     }
   });
   
@@ -31,8 +34,10 @@ router.post("/register", async(req, res) => {
   router.post("/login", async (req, res) => {
     try {
       const user = await User.findOne({ email: req.body.email });
+      console.log(req.body);
       if (user) {
         const passwordMatch = await bcrypt.compare(req.body.password, user.password);
+        
         if (passwordMatch) {
           res.send({
             _id: user._id,
@@ -52,7 +57,6 @@ router.post("/register", async(req, res) => {
       res.status(500).send("An error occurred during login.");
     }
   });
-
 
 
 
