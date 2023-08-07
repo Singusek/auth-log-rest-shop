@@ -6,7 +6,7 @@ const generateLogToken = (user) => {
     return jwt.sign(
       {
         _id: user._id,
-        fullname: user.fullname,
+        username: user.username,
         email: user.email,
       },
       process.env.JWT_PASS || '401230',

@@ -3,6 +3,8 @@ import  express  from 'express';
 import dotenv from 'dotenv';
 import mongoose from "mongoose";
 import userRouter from './Routers/userRouter.js';
+import itemRouter from './Routers/itemsRouter.js';
+import orderRouter from './Routers/orderRouters.js';
 
 
 const app = express();
@@ -35,6 +37,8 @@ app.use(function (req, res, next) {
 })
 
 app.use('/api/users',userRouter);
+app.use('/api/items', itemRouter);
+app.use('/api/order', orderRouter);
 
 
 const  port = process.env.PORT || 8000;

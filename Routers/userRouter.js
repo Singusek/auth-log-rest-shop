@@ -10,6 +10,7 @@ const router = express.Router();
 
 //Create User
   router.post("/re", async (req, res) => {
+
     console.log(req.body);
     try {
       console.log(req.body);
@@ -17,16 +18,24 @@ const router = express.Router();
       if (user)
       return res.send("User with given email is existing!");
     
-   user= new User({
-      fullname: req.body.fullname,
-      email: req.body.email,
-      password: await bcrypt.hash(req.body.password, 10),
-    }).save();
-    res.send(user);
-    }
+      user = new User({
+          username: req.body.username,
+          name: req.body.name,
+          surname: req.body.surname,
+          email: req.body.email,
+          password: await bcrypt.hash(req.body.password, 10),
+          gender: req.body.gender,
+          phone: req.body.phone,
+          country: req.body.country,
+          zip_code: req.body.zip_code,
+          birthdate: req.body.birthdate,
+          date: req.body.date
+      }).save();
     
-    catch(error) {
-
+      res.send(user);
+      }
+    catch (error) {
+      console.error(error);
     }
   });
   
@@ -41,7 +50,7 @@ const router = express.Router();
         if (passwordMatch) {
           res.send({
             _id: user._id,
-            fullname: user.fullname,
+            username: user.username,
             email: user.email,
             password: user.password,
             token: generateLogToken(user),
