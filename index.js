@@ -20,9 +20,9 @@ mongoose
     console.log(err.message);
   });
 
-// app.get('/',(req,res)=>{
-//     console.log('server is starting ');
-// })
+app.get('/',(req,res)=>{
+    console.log('server is starting ');
+})
 
 app.use(express.json());
 

@@ -5,7 +5,7 @@ import Order from "../Models/Order.js";
 
 const orderRouter = express.Router();
 
-// Get all orders 
+/**Get all orders**/
 orderRouter.get("/all", async (req, res) => {
     try {
       const orders = await Order.find();
@@ -16,7 +16,7 @@ orderRouter.get("/all", async (req, res) => {
     }
   });
 
-// Get order by ID 
+/**Get order by ID**/
 orderRouter.get("/:_id", async (req, res) => {
     try {
       const order = await Order.findById(req.params._id);
@@ -31,7 +31,7 @@ orderRouter.get("/:_id", async (req, res) => {
     }
   });
 
-// Add new order
+/**Add new order**/
 orderRouter.post("/add", async (req, res) => {
     try {
       const newOrder = new Order({
@@ -52,7 +52,7 @@ orderRouter.post("/add", async (req, res) => {
     }
   });
 
-// Update order
+/**Update order**/
 orderRouter.put("/:_id", async (req, res) => {
     try {
       const updatedOrder = await Order.findByIdAndUpdate(req.params._id, req.body, {
@@ -69,7 +69,7 @@ orderRouter.put("/:_id", async (req, res) => {
     }
   });
 
-// Delete order by ID
+/**Delete order by ID**/
 orderRouter.delete("/:_id", async (req, res) => {
     try {
       const deletedOrder = await Order.findByIdAndDelete(req.params._id);

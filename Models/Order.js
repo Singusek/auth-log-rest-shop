@@ -1,6 +1,4 @@
 import mongoose from "mongoose";
-// import User from "./User";
-// import Items from "./Items";
 
 
 const orderSchema = new mongoose.Schema({
@@ -14,10 +12,10 @@ const orderSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Items',
             required: true,
-            quantity: {
-                type: Number,
-                required: true,
-            }
+        },
+        quantity: { 
+            type: Number,
+            required: true,
         }
     }],
     total: {
@@ -33,6 +31,7 @@ const orderSchema = new mongoose.Schema({
         type: String,
         format: Date,
         required: true,
+        default: Date.now,
     }
 });
 const Order = mongoose.model('order', orderSchema);

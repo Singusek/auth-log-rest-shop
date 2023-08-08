@@ -8,7 +8,7 @@ import generateLogToken from "../utils.js";
 const router = express.Router();
 
 
-//Create User
+/**Create User**/
   router.post("/re", async (req, res) => {
 
     console.log(req.body);
@@ -29,7 +29,7 @@ const router = express.Router();
           country: req.body.country,
           zip_code: req.body.zip_code,
           birthdate: req.body.birthdate,
-          date: req.body.date
+          date_registration: req.body.date_registration
       }).save();
     
       res.send(user);
@@ -39,7 +39,7 @@ const router = express.Router();
     }
   });
   
-  // Login
+  /**Login**/
   router.post("/login", async (req, res) => {
     try {
       const user = await User.findOne({ email: req.body.email });

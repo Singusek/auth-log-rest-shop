@@ -3,7 +3,7 @@ import Items from "../Models/Items.js";
 
 const itemRouter = express.Router();
 
-//All items
+/**All items**/
 itemRouter.get("/all", async (req, res) => {
     try {
       const items = await Items.find();
@@ -14,7 +14,7 @@ itemRouter.get("/all", async (req, res) => {
     }
   });
   
-// Dowland Items by ID 
+/**Dowland Items by ID **/
 itemRouter.get("/_id", async (req, res) => {
     try {
       const item = await Items.findById(req.params._id);
@@ -29,7 +29,7 @@ itemRouter.get("/_id", async (req, res) => {
     }
   });
 
-//Add new item
+/**Add new item**/
 itemRouter.post("/add", async (req, res) => {
     try {
       const newItem = new Items({
@@ -48,7 +48,7 @@ itemRouter.post("/add", async (req, res) => {
   });
 
 
-// Update item
+/**Update item**/
 itemRouter.put("/_id", async (req, res) => {
     try {
       const updatedItem = await Items.findByIdAndUpdate(req.params._id, req.body, {
@@ -65,7 +65,7 @@ itemRouter.put("/_id", async (req, res) => {
     }
   });
 
-// Delete Item
+/**Delete Item**/
 itemRouter.delete("/_id", async (req, res) => {
     try {
       const deletedItem = await Items.findByIdAndDelete(req.params._id);

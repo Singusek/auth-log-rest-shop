@@ -45,13 +45,13 @@ const userSchema = new mongoose.Schema({
         format: Date,
         required: true,
     },
-    data: {
+    data_registration: {
         type: Date,
         default: +new Date() + 30 * 24 * 60 * 60 * 1000,
     },
     role: {
         type: String,
-        enum: ["user", "admin"],
+        enum: ["user", "admin", "worker"],
         default: 'user',
     }
 });
