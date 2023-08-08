@@ -18,7 +18,15 @@ const orderSchema = new mongoose.Schema({
             required: true,
         }
     }],
-    total: {
+    netPrice: {
+        type: Number,
+        required: true,
+    },
+    grossPrice: {
+        type: Number,
+        required: true,
+    },
+    vatValue: {
         type: Number,
         required: true,
     },

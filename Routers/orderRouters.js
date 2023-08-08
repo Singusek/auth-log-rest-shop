@@ -40,7 +40,9 @@ orderRouter.post("/add", async (req, res) => {
             item: item.item,
             quantity: item.quantity
           })),
-        total: req.body.total,
+        netPrice: req.body.netPrice,
+        grossPrice: req.body.grossPrice,
+        vatValue: req.body.vatValue,
         status: req.body.status,
         order_date: req.body.order_date
       });
