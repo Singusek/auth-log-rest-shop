@@ -10,7 +10,7 @@ itemRouter.get("/all", async (req, res) => {
       res.json(items);
     } catch (error) {
       console.error(error);
-      res.status(500).send("An error occurred while fetching items.");
+      res.status(500).json({ error: "Internal Server Error" });
     }
   });
   
@@ -21,11 +21,11 @@ itemRouter.get("/_id", async (req, res) => {
       if (item) {
         res.json(item);
       } else {
-        res.status(404).send("Item not found");
+        res.status(404).send("Not Found");
       }
     } catch (error) {
       console.error(error);
-      res.status(500).send("An error occurred while fetching the item.");
+      res.status(500).json({ error: "Internal Server Error" });
     }
   });
 
@@ -43,7 +43,7 @@ itemRouter.post("/add", async (req, res) => {
       res.send(newItem);
     } catch (error) {
       console.error(error);
-      res.status(400).send("Invalid data provided.");
+      res.status(400).json({ error: "Bad request" });
     }
   });
 
@@ -57,11 +57,11 @@ itemRouter.put("/_id", async (req, res) => {
       if (updatedItem) {
         res.json(updatedItem);
       } else {
-        res.status(404).send("Item not found");
+        res.status(404).json({ error: "Not Found" });
       }
     } catch (error) {
       console.error(error);
-      res.status(500).send("An error occurred while updating the item.");
+      res.status(500).json({ error: "Internal Server Error" });
     }
   });
 
@@ -72,11 +72,11 @@ itemRouter.delete("/_id", async (req, res) => {
       if (deletedItem) {
         res.send("Item deleted");
       } else {
-        res.status(404).send("Item not found");
+        res.status(404).json({ error: "Not Found" });
       }
     } catch (error) {
       console.error(error);
-      res.status(500).send("An error occurred while deleting the item.");
+      res.status(500).json({ error: "Internal Server Error" });
     }
   });
   

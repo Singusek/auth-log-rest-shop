@@ -49,6 +49,10 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: +new Date() + 30 * 24 * 60 * 60 * 1000,
     },
+    current_data_registration: {
+        type: Date,
+        default: Date.now,
+    },
     role: {
         type: String,
         enum: ["user", "admin", "worker"],
