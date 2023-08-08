@@ -21,7 +21,7 @@ itemRouter.get("/_id", async (req, res) => {
       if (item) {
         res.json(item);
       } else {
-        res.status(404).send("Not Found");
+        res.status(404).json({ error: "Not Found" });
       }
     } catch (error) {
       console.error(error);
@@ -70,7 +70,7 @@ itemRouter.delete("/_id", async (req, res) => {
     try {
       const deletedItem = await Items.findByIdAndDelete(req.params._id);
       if (deletedItem) {
-        res.send("Item deleted");
+        res.json({ success: "Item deleted" });
       } else {
         res.status(404).json({ error: "Not Found" });
       }

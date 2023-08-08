@@ -76,7 +76,7 @@ orderRouter.delete("/:_id", async (req, res) => {
     try {
       const deletedOrder = await Order.findByIdAndDelete(req.params._id);
       if (deletedOrder) {
-        res.send("Order deleted");
+        res.json({ success: "Order deleted" });
       } else {
         res.status(404).json({ error: "Not Found" });;
       }

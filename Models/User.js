@@ -45,11 +45,11 @@ const userSchema = new mongoose.Schema({
         format: Date,
         required: true,
     },
-    data_registration: {
+    expiration_date: {
         type: Date,
-        default: +new Date() + 30 * 24 * 60 * 60 * 1000,
+        default: +new Date() + 360 * 24 * 60 * 60 * 1000,
     },
-    current_data_registration: {
+    data_registration: {
         type: Date,
         default: Date.now,
     },

@@ -4,21 +4,20 @@ import bcrypt from "bcryptjs";
 import generateLogToken from "../utils.js";
 
 
-
 const router = express.Router();
 
+function isExpired(expirationDate) {
+  const currentDate = new Date();
+  return currentDate >= expirationDate;
+}
 
 /**Create User**/
   router.post("/register", async (req, res) => {
-
-    console.log(req.body);
     try {
-      console.log(req.body);
-
       let user = await User.findOne({email : req.body.email});
 
       if (user)
-      return res.send("User with given email is existing!");
+      return res.json({ error: "User with given email is existing!" });
     
       user = new User({
           username: req.body.username,
@@ -32,9 +31,8 @@ const router = express.Router();
           zip_code: req.body.zip_code,
           birthdate: req.body.birthdate,
           date_registration: req.body.date_registration,
-          current_data_registration: req.body.current_data_registration
+          expiration_date: req.body.expiration_date
       }).save();
-    
       res.send(user);
     }
     catch (error) {
@@ -47,7 +45,6 @@ const router = express.Router();
   router.post("/login", async (req, res) => {
     try {
         const user = await User.findOne({ email: req.body.email });
-        console.log(req.body);
 
         if (!user) {
             return res.status(404).json({ error: "Not Found" });
@@ -58,17 +55,11 @@ const router = express.Router();
             return res.status(401).json({ error: "Unauthorized" });
         }
 
-        const currentDate = new Date();
-        const registrationDate = new Date(user.current_data_registration);
-        const differenceInMilliseconds = currentDate - registrationDate;
-        const differenceInYears = differenceInMilliseconds / (1000 * 60 * 60 * 24 * 365);
-
-        if (differenceInYears >= 2) {
+        if (isExpired(user.expiration_date)) {
             return res.status(401).json({ error: "Unauthorized" });
         }
 
         const token = generateLogToken(user);
-
         res.json({ token });
 
     } catch (error) {
