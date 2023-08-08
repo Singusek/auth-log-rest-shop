@@ -12,7 +12,7 @@ orderRouter.get("/all", async (req, res) => {
       res.json(orders);
     } catch (error) {
       console.error(error);
-      res.status(500).send("An error occurred while fetching orders.");
+      res.status(500).json({ error: "Internal Server Error" });
     }
   });
 
@@ -23,11 +23,11 @@ orderRouter.get("/:_id", async (req, res) => {
       if (order) {
         res.json(order);
       } else {
-        res.status(404).send("Order not found");
+        res.status(404).json({ error: "Not Found" });
       }
     } catch (error) {
       console.error(error);
-      res.status(500).send("An error occurred while fetching the order.");
+      res.status(500).json({ error: "Internal Server Error" });
     }
   });
 
@@ -50,7 +50,7 @@ orderRouter.post("/add", async (req, res) => {
       res.json(savedOrder);
     } catch (error) {
       console.error(error);
-      res.status(400).send("Invalid data provided.");
+      res.status(400).json({ error: "Bad request" });
     }
   });
 
@@ -63,11 +63,11 @@ orderRouter.put("/:_id", async (req, res) => {
       if (updatedOrder) {
         res.json(updatedOrder);
       } else {
-        res.status(404).send("Order not found");
+        res.status(404).json({ error: "Not Found" });
       }
     } catch (error) {
       console.error(error);
-      res.status(500).send("An error occurred while updating the order.");
+      res.status(500).json({ error: "Internal Server Error" });
     }
   });
 
@@ -76,13 +76,13 @@ orderRouter.delete("/:_id", async (req, res) => {
     try {
       const deletedOrder = await Order.findByIdAndDelete(req.params._id);
       if (deletedOrder) {
-        res.send("Order deleted");
+        res.json({ success: "Order deleted" });
       } else {
-        res.status(404).send("Order not found");
+        res.status(404).json({ error: "Not Found" });;
       }
     } catch (error) {
       console.error(error);
-      res.status(500).send("An error occurred while deleting the order.");
+      res.status(500).json({ error: "Internal Server Error" });
     }
   });
 
