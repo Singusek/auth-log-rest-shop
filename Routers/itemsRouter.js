@@ -3,21 +3,35 @@ import Items from "../Models/Items.js";
 
 const itemRouter = express.Router();
 
-/**All items**/
-itemRouter.get("/all", async (req, res) => {
-    try {
-      const items = await Items.find();
-      res.json(items);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Internal Server Error" });
+/**All items with pagination**/
+itemRouter.get("/page", async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const itemsPerPage = parseInt(req.query.itemsPerPage) || 5;
+    const skipItems = (page - 1) * itemsPerPage;
+
+    let query = Items.find();
+
+  /**Add filtering if filter parameters are passed in the query **/
+    if (req.body.category !== null) {
+      query = query.where("category").equals(req.query.category);
     }
-  });
+
+    query = query.skip(skipItems).limit(itemsPerPage);
+    const items = await query;
+
+    res.json(items);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
   
 /**Dowland Items by ID **/
 itemRouter.get("/_id", async (req, res) => {
     try {
       const item = await Items.findById(req.params._id);
+      
       if (item) {
         res.json(item);
       } else {
